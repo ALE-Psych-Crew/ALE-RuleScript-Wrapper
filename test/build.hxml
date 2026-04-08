@@ -1,0 +1,4 @@
+-lib rulescript
+-lib ale-rulescript-wrapper
+-main Main
+--interp
