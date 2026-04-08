@@ -1,0 +1,17 @@
+{
+    "name": "ale-rulescript-wrapper",
+    "url": "https://github.com/ALE-Psych-Crew/ALE-RuleScript-Wrapper",
+    "license": "MIT",
+    "tags": [
+        "haxe",
+        "hscript",
+        "rulescript"
+    ],
+    "description": "List of Tools to Make Using RuleScript Easier",
+    "version": "1.0",
+    "classPath": "source/",
+    "releasenote": "",
+    "contributors": [
+        "AlejoGDOfficial"
+    ]
+}
