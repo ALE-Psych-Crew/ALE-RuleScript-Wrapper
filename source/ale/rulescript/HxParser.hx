@@ -20,7 +20,7 @@ class HxParser extends OGHxParser
 
 		this.mode = mode;
 
-		this.name = name.replace('.', '/') + RuleScriptGlobal.MODULE_EXTENSION;		
+		this.name = name.replace('.', '/') + (mode == DEFAULT ? RuleScriptGlobal.SCRIPT_EXTENSION : RuleScriptGlobal.MODULE_EXTENSION);		
 	}
 
 	override public function parse(code:String):Expr
