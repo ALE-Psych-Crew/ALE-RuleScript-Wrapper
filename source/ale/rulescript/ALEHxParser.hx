@@ -9,7 +9,7 @@ using StringTools;
 
 class ALEHxParser extends HxParser
 {
-	public var name:String = 'ALEScript.hx';
+	public var name:String = ALERuleScriptGlobal.SCRIPT_NAME;
 	
 	override public function new(name:String, ?mode:HxParserMode = DEFAULT)
 	{
