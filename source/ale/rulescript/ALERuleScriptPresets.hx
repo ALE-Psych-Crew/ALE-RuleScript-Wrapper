@@ -1,5 +1,12 @@
 package ale.rulescript;
 
+import rulescript.scriptedClass.RuleScriptedClassUtil;
+import rulescript.scriptedClass.RuleScriptedClass;
+import rulescript.interps.RuleScriptInterp;
+import rulescript.types.ScriptedModule;
+import rulescript.RuleScript;
+import rulescript.Tools;
+
 import hscript.Expr;
 
 using StringTools;
@@ -23,5 +30,30 @@ class ALERuleScriptPresets
             return null;
 
         return new ALEHxParser(name, MODULE).parseModule(ALERuleScriptGlobal.FILE_READER(filePath));
+    }
+
+    public static function SCRIPT_RESOLVER(name:String):Dynamic
+    {
+        final path:TypePath = Tools.parseTypePath(name);
+
+        final module:Array<ModuleDecl> = ScriptedTypeUtil.resolveModule(path.moduleType());
+
+        return module == null ? null : new ScriptedModule(path.modulePath(), module, ScriptedTypeUtil._currentContext).types[path.typeName];
+    }
+
+    public static function BUILD_BRIDGE(typePath:String, superInstance:Dynamic):RuleScript
+    {
+        final type:ScriptedClassType = ScriptedTypeUtil.resolveScript(typePath);
+
+        final script:ALERuleScript = new ALERuleScript(typePath);
+        script.getInterp(RuleScriptInterp).skipNextRestore = true;
+        script.superInstance = superInstance;
+
+        if (type.isExpr)
+            script.execute(cast type);
+        else
+            RuleScriptedClassUtil.buildScriptedClass(cast (type, ScriptedClass), script);
+
+        return script;
     }
 }
