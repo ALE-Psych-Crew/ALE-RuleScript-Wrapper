@@ -3,15 +3,18 @@ package ale.rulescript;
 import rulescript.scriptedClass.RuleScriptedClassUtil;
 import rulescript.scriptedClass.RuleScriptedClass;
 import rulescript.interps.RuleScriptInterp;
+import rulescript.types.ScriptedTypeUtil;
 import rulescript.types.ScriptedModule;
-import rulescript.RuleScript;
+import rulescript.RuleScript as OGRuleScript;
 import rulescript.Tools;
+
+import haxe.Exception;
 
 import hscript.Expr;
 
 using StringTools;
 
-class ALERuleScriptPresets
+class RuleScriptPresets
 {
     public static function MODULE_RESOLVER(name:String):Array<ModuleDecl>
     {
@@ -24,28 +27,34 @@ class ALERuleScriptPresets
 
         final moduleName:String = path.length > 1 ? path.shift() : null;
 
-        final filePath:String = ALERuleScriptGlobal.MODULE_PATH + (pack.length >= 1 ? pack.join('.') + '.' + (moduleName ?? path[0]) : path[0]).replace('.', '/') + ALERuleScriptGlobal.MODULE_EXTENSION;
+        final filePath:String = RuleScriptGlobal.MODULE_PATH + (pack.length >= 1 ? pack.join('.') + '.' + (moduleName ?? path[0]) : path[0]).replace('.', '/') + RuleScriptGlobal.MODULE_EXTENSION;
 
-        if (!ALERuleScriptGlobal.FILE_CHECKER(filePath))
+        if (!RuleScriptGlobal.FILE_CHECKER(filePath))
             return null;
 
-        return new ALEHxParser(name, MODULE).parseModule(ALERuleScriptGlobal.FILE_READER(filePath));
+        return new HxParser(name, MODULE).parseModule(RuleScriptGlobal.FILE_READER(filePath));
     }
 
     public static function SCRIPT_RESOLVER(name:String):Dynamic
     {
         final path:TypePath = Tools.parseTypePath(name);
 
-        final module:Array<ModuleDecl> = ScriptedTypeUtil.resolveModule(path.moduleType());
+        final module:Array<ModuleDecl> = ScriptedTypeUtil.resolveModule(path.modulePath());
 
+        @:privateAccess
         return module == null ? null : new ScriptedModule(path.modulePath(), module, ScriptedTypeUtil._currentContext).types[path.typeName];
     }
 
-    public static function BUILD_BRIDGE(typePath:String, superInstance:Dynamic):RuleScript
+    public static function ERROR_HANDLER(error:Dynamic):Void
     {
-        final type:ScriptedClassType = ScriptedTypeUtil.resolveScript(typePath);
+        trace('RuleScript Error: ' + (error is Exception ? cast(error, Exception).details() : error));
+    }
 
-        final script:ALERuleScript = new ALERuleScript(typePath);
+    public static function BUILD_BRIDGE(typePath:String, superInstance:Dynamic):OGRuleScript
+    {
+        final type:Dynamic = ScriptedTypeUtil.resolveScript(typePath);
+
+        final script:RuleScript = new RuleScript(typePath);
         script.getInterp(RuleScriptInterp).skipNextRestore = true;
         script.superInstance = superInstance;
 

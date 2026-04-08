@@ -6,6 +6,6 @@ class Main
 {
     public static function main()
     {
-        ALERuleScriptGlobal.apply();
+        RuleScriptGlobal.apply();
     }
 }

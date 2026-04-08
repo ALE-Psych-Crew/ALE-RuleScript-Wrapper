@@ -4,12 +4,12 @@ import sys.FileSystem;
 import sys.io.File;
 
 import rulescript.scriptedClass.RuleScriptedClassUtil;
+import rulescript.RuleScript as OGRuleScript;
 import rulescript.types.ScriptedTypeUtil;
-import rulescript.RuleScript;
 
 import hscript.Expr;
 
-class ALERuleScriptGlobal
+class RuleScriptGlobal
 {
     // Global
 
@@ -19,7 +19,7 @@ class ALERuleScriptGlobal
     // Debug
 
     public static var SCRIPT_NAME:String;
-    public static var ERROR_HANDLER:String -> Void;
+    public static var ERROR_HANDLER:Dynamic -> Void;
 
     // Modules
 
@@ -34,7 +34,7 @@ class ALERuleScriptGlobal
 
     // Classes
 
-    public static var BUILD_BRIDGE:String -> Dynamic -> RuleScript;
+    public static var BUILD_BRIDGE:String -> Dynamic -> OGRuleScript;
 
     // Utils
 
@@ -58,13 +58,15 @@ class ALERuleScriptGlobal
         FILE_READER = File.getContent;
 
         SCRIPT_NAME = 'ale-rulescript-module.hx';
+        ERROR_HANDLER = RuleScriptPresets.ERROR_HANDLER;
 
         MODULE_EXTENSION = '.hx';
         MODULE_PATH = 'scripts/classes/';
-        MODULE_RESOLVER = ALERuleScriptPresets.MODULE_RESOLVER;
+        MODULE_RESOLVER = RuleScriptPresets.MODULE_RESOLVER;
 
-        BUILD_BRIDGE = ALERuleScriptPresets.BUILD_BRIDGE;
-
+        SCRIPT_PATH = 'scripts/';
         SCRIPT_EXTENSION = '.hx';
+
+        BUILD_BRIDGE = RuleScriptPresets.BUILD_BRIDGE;
     }
 }

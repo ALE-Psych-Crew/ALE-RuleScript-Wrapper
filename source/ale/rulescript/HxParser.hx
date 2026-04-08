@@ -1,15 +1,16 @@
 package ale.rulescript;
 
-import rulescript.parsers.HxParser;
+import rulescript.parsers.HxParser as OGHxParser;
+import rulescript.parsers.HxParser.HxParserMode;
 import rulescript.Tools;
 
 import hscript.Expr;
 
 using StringTools;
 
-class ALEHxParser extends HxParser
+class HxParser extends OGHxParser
 {
-	public var name:String = ALERuleScriptGlobal.SCRIPT_NAME;
+	public var name:String = RuleScriptGlobal.SCRIPT_NAME;
 	
 	override public function new(name:String, ?mode:HxParserMode = DEFAULT)
 	{
@@ -19,7 +20,7 @@ class ALEHxParser extends HxParser
 
 		this.mode = mode;
 
-		this.name = name.replace('.', '/') + ALERuleScriptGlobal.MODULE_EXTENSION;		
+		this.name = name.replace('.', '/') + RuleScriptGlobal.MODULE_EXTENSION;		
 	}
 
 	override public function parse(code:String):Expr

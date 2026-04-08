@@ -1,20 +1,22 @@
 package ale.rulescript;
 
+import rulescript.RuleScript as OGRuleScript;
 import rulescript.interps.RuleScriptInterp;
-import rulescript.RuleScript;
 import rulescript.Context;
+
+import haxe.Exception;
 
 using StringTools;
 
-class ALERuleScript extends RuleScript
+class RuleScript extends OGRuleScript
 {
     public function new(scriptName:String, ?context:Context)
     {
-        super(new RuleScriptInterp(), new ALEHxParser(scriptName), context);
+        super(new RuleScriptInterp(), new HxParser(scriptName), context);
 
-        getInterp(RuleScriptInterp).scriptName = scriptName.replace('.', '/') + ALERuleScriptGlobal.SCRIPT_EXTENSION;
+        getInterp(RuleScriptInterp).scriptName = scriptName.replace('.', '/') + RuleScriptGlobal.SCRIPT_EXTENSION;
 
-        this.errorHandler = ALERuleScriptGlobal.ERROR_HANDLER;
+        this.errorHandler = RuleScriptGlobal.ERROR_HANDLER;
     }
 
     public function call(name:String, ?args:Array<Dynamic>):Dynamic
@@ -27,7 +29,7 @@ class ALERuleScript extends RuleScript
             {
                 return Reflect.callMethod(null, func, args ?? []);
             } catch(error:Exception) {
-                ALERuleScriptGlobal.ERROR_HANDLER(error.details());
+                RuleScriptGlobal.ERROR_HANDLER(error.details());
             }
         }
 
