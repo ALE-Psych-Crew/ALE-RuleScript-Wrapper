@@ -16,6 +16,27 @@ using StringTools;
 
 class RuleScriptPresets
 {
+    public static var IMPORTS:Array<Class<Dynamic>> = [
+        Array,
+        Date,
+        DateTools,
+        EReg,
+        IntIterator,
+        Lambda,
+        List,
+        Math,
+        Reflect,
+        Std,
+        StringBuf,
+        StringTools,
+        Sys,
+        Xml
+    ];
+    
+    public static var ABSTRACTS:Array<String> = [];
+
+    public static var TYPEDEFS:Map<String, Class<Dynamic>> = [];
+
     public static function MODULE_RESOLVER(name:String):Array<ModuleDecl>
     {
         final path:Array<String> = name.split('.');
