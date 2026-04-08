@@ -38,7 +38,7 @@ class RuleScript extends OGRuleScript
 
     public function call(name:String, ?args:Array<Dynamic>):Dynamic
     {
-        final func:Dynamic = variables.get(name);
+        final func:Dynamic = get(name);
 
         if (func != null && Reflect.isFunction(func))
         {
@@ -55,6 +55,9 @@ class RuleScript extends OGRuleScript
 
     public function set(name:String, value:Dynamic):Void
         variables.set(name, value);
+
+    public function get(name:String):Dynamic
+        return variables.get(name);
 
 	public function setClass(cls:Class<Dynamic>):Void
 		set(Type.getClassName(cls).split('.').pop(), cls);

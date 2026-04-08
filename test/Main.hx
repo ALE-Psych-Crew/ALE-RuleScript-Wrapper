@@ -9,6 +9,11 @@ class Main
         RuleScriptGlobal.apply();
 
         final script:RuleScript = new RuleScript('oso');
+
+        script.set('oso', 'OSO VARIABLE');
+
         script.run();
+        
+        script.call('osoFunc');
     }
 }
