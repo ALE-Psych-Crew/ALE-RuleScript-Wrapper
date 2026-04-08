@@ -37,6 +37,26 @@ class RuleScriptPresets
 
     public static var TYPEDEFS:Map<String, Class<Dynamic>> = [];
 
+
+    public static function ERROR_HANDLER(error:Dynamic):Dynamic
+    {
+        Sys.println('[ RuleScript Error ] ' + (error is Exception ? cast(error, Exception).message : error));
+        
+        return error;
+    }
+
+    
+    public static function SCRIPT_RESOLVER(name:String):Dynamic
+    {
+        final path:TypePath = Tools.parseTypePath(name);
+
+        final module:Array<ModuleDecl> = ScriptedTypeUtil.resolveModule(path.modulePath());
+
+        @:privateAccess
+        return module == null ? null : new ScriptedModule(path.modulePath(), module, ScriptedTypeUtil._currentContext).types[path.typeName];
+    }
+
+
     public static function MODULE_RESOLVER(name:String):Array<ModuleDecl>
     {
         final path:Array<String> = name.split('.');
@@ -54,23 +74,6 @@ class RuleScriptPresets
             return null;
 
         return new HxParser(name, MODULE).parseModule(RuleScriptGlobal.FILE_READER(filePath));
-    }
-
-    public static function SCRIPT_RESOLVER(name:String):Dynamic
-    {
-        final path:TypePath = Tools.parseTypePath(name);
-
-        final module:Array<ModuleDecl> = ScriptedTypeUtil.resolveModule(path.modulePath());
-
-        @:privateAccess
-        return module == null ? null : new ScriptedModule(path.modulePath(), module, ScriptedTypeUtil._currentContext).types[path.typeName];
-    }
-
-    public static function ERROR_HANDLER(error:Dynamic):Dynamic
-    {
-        Sys.println('[ RuleScript Error ] ' + (error is Exception ? cast(error, Exception).message : error));
-        
-        return error;
     }
 
     public static function BUILD_BRIDGE(typePath:String, superInstance:Dynamic):OGRuleScript

@@ -50,6 +50,9 @@ class RuleScriptGlobal
 
     public static function reset()
     {
+        if (!initializedValues)
+            initializedValues = true;
+
         FILE_CHECKER = FileSystem.exists;
         FILE_READER = File.getContent;
 
@@ -76,11 +79,7 @@ class RuleScriptGlobal
     public static function apply()
     {
         if (!initializedValues)
-        {
             reset();
-
-            initializedValues = true;
-        }
 
         ScriptedTypeUtil.resolveModule = MODULE_RESOLVER;
         ScriptedTypeUtil.resolveScript = SCRIPT_RESOLVER;
