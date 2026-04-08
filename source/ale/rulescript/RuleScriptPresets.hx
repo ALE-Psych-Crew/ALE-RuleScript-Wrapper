@@ -45,9 +45,11 @@ class RuleScriptPresets
         return module == null ? null : new ScriptedModule(path.modulePath(), module, ScriptedTypeUtil._currentContext).types[path.typeName];
     }
 
-    public static function ERROR_HANDLER(error:Dynamic):Void
+    public static function ERROR_HANDLER(error:Dynamic):Dynamic
     {
-        trace('RuleScript Error: ' + (error is Exception ? cast(error, Exception).details() : error));
+        Sys.println('[ RuleScript Error ] ' + (error is Exception ? cast(error, Exception).message : error));
+        
+        return error;
     }
 
     public static function BUILD_BRIDGE(typePath:String, superInstance:Dynamic):OGRuleScript

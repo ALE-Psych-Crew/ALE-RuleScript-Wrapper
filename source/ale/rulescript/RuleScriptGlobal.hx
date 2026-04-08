@@ -19,7 +19,7 @@ class RuleScriptGlobal
     // Debug
 
     public static var SCRIPT_NAME:String;
-    public static var ERROR_HANDLER:Dynamic -> Void;
+    public static var ERROR_HANDLER:Dynamic -> Dynamic;
 
     // Modules
 

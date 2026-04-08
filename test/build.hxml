@@ -1,4 +1,6 @@
 -lib rulescript
 -lib ale-rulescript-wrapper
+-D message.reporting=pretty
+-D hscriptPos
 -main Main
 --interp

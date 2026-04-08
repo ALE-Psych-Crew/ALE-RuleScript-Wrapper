@@ -10,13 +10,30 @@ using StringTools;
 
 class RuleScript extends OGRuleScript
 {
-    public function new(scriptName:String, ?context:Context)
+    public final codePath:String;
+
+    public function new(scriptName:String, ?superInstance:Dynamic, ?shouldExecute:Bool = false, ?context:Context)
     {
         super(new RuleScriptInterp(), new HxParser(scriptName), context);
 
-        getInterp(RuleScriptInterp).scriptName = scriptName.replace('.', '/') + RuleScriptGlobal.SCRIPT_EXTENSION;
+        this.superInstance = superInstance;
 
-        this.errorHandler = RuleScriptGlobal.ERROR_HANDLER;
+        codePath = RuleScriptGlobal.SCRIPT_PATH + scriptName.replace('.', '/') + RuleScriptGlobal.SCRIPT_EXTENSION;
+
+        getInterp(RuleScriptInterp).scriptName = codePath;
+
+        errorHandler = RuleScriptGlobal.ERROR_HANDLER;
+
+        if (shouldExecute)
+            run();
+    }
+
+    public function run():Dynamic
+    {
+        if (RuleScriptGlobal.FILE_CHECKER(codePath))
+            return tryExecute(RuleScriptGlobal.FILE_READER(codePath), RuleScriptGlobal.ERROR_HANDLER);
+
+        return null;
     }
 
     public function call(name:String, ?args:Array<Dynamic>):Dynamic
