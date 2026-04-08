@@ -4,7 +4,7 @@
 
 ---
 
-**ALE RuleScript Wrapper** is a tool designed to make it easier to use and customize RuleScript
+**ALE RuleScript Wrapper** is a tool designed to make it easier to use and customize [RuleScript](https://github.com/Kriptel/RuleScript/tree/dev)
 
 (Intended for using Flags and Scripts as files)
 
