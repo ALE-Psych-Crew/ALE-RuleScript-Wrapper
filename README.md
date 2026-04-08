@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".art/logo.png"/>
+  <img src="https://raw.githubusercontent.com/ALE-Psych-Crew/ALE-RuleScript-Wrapper/main/.art/logo.png"/>
 </p>
 
 ---
