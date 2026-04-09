@@ -106,10 +106,8 @@ class RuleScriptPresets
 
     public static final SCRIPT_NAME:String = 'ale-rulescript.hx';
 
-    public static function ERROR_HANDLER(error:Dynamic):Dynamic
+    public static function ERROR_HANDLER(error:String):Void
     {
-        Sys.println('[ RuleScript Error ] ' + (error is Exception ? cast(error, Exception).message : error));
-        
-        return error;
+        Sys.println('[ RuleScript Error ] ' + error);
     }
 }

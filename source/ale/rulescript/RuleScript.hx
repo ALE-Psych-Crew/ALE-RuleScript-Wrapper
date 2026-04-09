@@ -10,6 +10,8 @@ using StringTools;
 
 class RuleScript extends OGRuleScript
 {
+    public var failedExecution:Bool = false;
+
     public final scriptPath:String;
 
     public function new(scriptName:String, ?superInstance:Dynamic, ?shouldExecute:Bool = false, ?context:Context)
@@ -22,7 +24,7 @@ class RuleScript extends OGRuleScript
 
         getInterp(RuleScriptInterp).scriptName = scriptPath;
 
-        errorHandler = RuleScriptGlobal.ERROR_HANDLER;
+        errorHandler = (error:Exception) -> RuleScriptGlobal.ERROR_HANDLER(error.message);
 
         if (shouldExecute)
             run();
@@ -31,7 +33,13 @@ class RuleScript extends OGRuleScript
     public function run():Dynamic
     {
         if (RuleScriptGlobal.FILE_CHECKER(scriptPath))
-            return tryExecute(RuleScriptGlobal.FILE_READER(scriptPath), RuleScriptGlobal.ERROR_HANDLER);
+            return tryExecute(RuleScriptGlobal.FILE_READER(scriptPath), (error:Exception) -> {
+                    failedExecution = true;
+
+                    RuleScriptGlobal.ERROR_HANDLER(error.message);
+                    
+                    return error.details();
+                });
 
         return null;
     }

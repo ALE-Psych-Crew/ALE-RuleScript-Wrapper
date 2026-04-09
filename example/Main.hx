@@ -26,13 +26,7 @@ class Main
         RuleScriptGlobal.MODULE_PATH = 'customModulesPath/';
         RuleScriptGlobal.SCRIPT_PATH = 'customScriptsPath/';
 
-        RuleScriptGlobal.ERROR_HANDLER = (error:Dynamic) -> {
-            final errorText:String = error is Exception ? cast(error, Exception).message : error;
-
-            trace('Custom Error Handler: ' + errorText);
-
-            return error;
-        }
+        RuleScriptGlobal.ERROR_HANDLER = (error:Dynamic) -> trace('Custom Error Handler: ' + error);
 
         /**
          * After initializing the variables and customizing them to your liking

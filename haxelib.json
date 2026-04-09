@@ -8,7 +8,7 @@
         "rulescript"
     ],
     "description": "List of Tools to Make Using RuleScript Easier",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "classPath": "source/",
     "releasenote": "",
     "contributors": [

@@ -42,7 +42,7 @@ class RuleScriptGlobal
     // Debug
 
     public static var SCRIPT_NAME:String;
-    public static var ERROR_HANDLER:Dynamic -> Dynamic;
+    public static var ERROR_HANDLER:String -> Void;
 
     // Utils & Default Values
 
