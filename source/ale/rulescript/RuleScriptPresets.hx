@@ -35,6 +35,7 @@ class RuleScriptPresets
         Math,
         Reflect,
         Std,
+        Type,
         StringBuf,
         StringTools,
         Sys,
